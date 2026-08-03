@@ -1,0 +1,22 @@
+# Step 5: CI/CD. On push to main, validate and deploy the bundle to prod.
+# Shows the "same code, promoted by a pipeline" story. Auth uses a service
+# principal via OAuth (set DATABRICKS_CLIENT_ID / DATABRICKS_CLIENT_SECRET as
+# repo secrets, plus DATABRICKS_HOST).
+name: deploy
+on:
+  push:
+    branches: [main]
+
+env:
+  DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+  DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
+  DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: databricks/setup-cli@main
+      - run: databricks bundle validate -t prod
+      - run: databricks bundle deploy -t prod

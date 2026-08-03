@@ -1,0 +1,10 @@
+# Databricks App config. `command` is how the app process is launched.
+command: ["streamlit", "run", "app.py"]
+env:
+  - name: CATALOG
+    value: main
+  - name: SCHEMA
+    value: ml_workshop
+  # The warehouse HTTP path is supplied by the app resource defined in the bundle.
+  - name: DATABRICKS_WAREHOUSE_HTTP_PATH
+    valueFrom: sql_warehouse

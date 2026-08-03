@@ -1,0 +1,36 @@
+# Databricks Asset Bundle (DAB) for the ML intro workshop.
+# One bundle ties together the whole end-to-end flow: schema, batch job, and app.
+# Deploy with:  databricks bundle deploy -t dev
+# Run the job:  databricks bundle run batch_inference -t dev
+bundle:
+  name: databricks-ml-intro-workshop
+
+# Variables let each attendee point the workshop at their own catalog/schema.
+variables:
+  catalog:
+    description: UC catalog to write the schema, model, and predictions into.
+    default: main
+  schema:
+    description: UC schema created by the bundle to hold workshop assets.
+    default: ml_workshop
+
+include:
+  - resources/*.yml
+
+targets:
+  # `dev` is the default target: assets are prefixed with your username and
+  # marked as development so they never collide with a teammate's.
+  dev:
+    mode: development
+    default: true
+    workspace:
+      # Point this at your own workspace before deploying.
+      host: https://<your-workspace>.cloud.databricks.com
+
+  # `prod` shows the CI/CD story: same code, deployed as a service principal.
+  # Enrichment: lock this to a service principal via run_as + permissions.
+  prod:
+    mode: production
+    workspace:
+      host: https://<your-workspace>.cloud.databricks.com
+      root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}

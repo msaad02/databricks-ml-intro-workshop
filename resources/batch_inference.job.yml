@@ -1,0 +1,29 @@
+# Step 4: a scheduled job that runs the batch-prediction notebook.
+# Serverless compute keeps the workshop simple — no cluster config to explain.
+resources:
+  jobs:
+    batch_inference:
+      name: ml-workshop-batch-inference
+      # Enrichment: add email/Slack notifications, retries, and a job cluster
+      # with a specific runtime instead of serverless.
+      schedule:
+        quartz_cron_expression: "0 0 6 * * ?" # daily at 06:00
+        timezone_id: America/Los_Angeles
+        pause_status: PAUSED # start paused so the workshop doesn't fire it unattended
+      tasks:
+        - task_key: batch_predict
+          # Serverless ML environment: mlflow + scikit-learn are preinstalled,
+          # so there's nothing to declare. (environment_version "5" is the ML
+          # runtime base env; bump the number as newer versions ship.)
+          environment_key: ml
+          notebook_task:
+            notebook_path: ../notebooks/04_batch_predict.ipynb
+            base_parameters:
+              catalog: ${var.catalog}
+              # Reference the schema resource so this always matches the schema the
+              # bundle actually created (dev mode prefixes the name, e.g. dev_<user>_).
+              schema: ${resources.schemas.workshop_schema.name}
+      environments:
+        - environment_key: ml
+          spec:
+            environment_version: "5"

@@ -1,0 +1,8 @@
+# The bundle creates the workshop schema so every asset has a home in UC.
+# The catalog is assumed to already exist (attendees are granted one).
+resources:
+  schemas:
+    workshop_schema:
+      catalog_name: ${var.catalog}
+      name: ${var.schema}
+      comment: Assets for the ML intro workshop.

@@ -10,8 +10,8 @@ from databricks.sdk.core import Config
 
 # App resources are injected as env vars (see app.yaml / bundle).
 CATALOG = os.getenv("CATALOG", "main")
-SCHEMA = os.getenv("SCHEMA", "ml_workshop")
-TABLE = f"{CATALOG}.{SCHEMA}.fare_predictions"
+SCHEMA = os.getenv("SCHEMA", "workshop")
+TABLE = f"{CATALOG}.{SCHEMA}.predictions"
 
 st.title("🚕 Taxi Fare Predictions")
 

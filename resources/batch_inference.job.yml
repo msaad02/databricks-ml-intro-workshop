@@ -3,7 +3,7 @@
 resources:
   jobs:
     batch_inference:
-      name: ml-workshop-batch-inference
+      name: batch-inference
       # Enrichment: add email/Slack notifications, retries, and a job cluster
       # with a specific runtime instead of serverless.
       schedule:

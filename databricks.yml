@@ -3,7 +3,7 @@
 # Deploy with:  databricks bundle deploy -t dev
 # Run the job:  databricks bundle run batch_inference -t dev
 bundle:
-  name: databricks-ml-intro-workshop
+  name: ml-workshop
 
 # Variables let each attendee point the workshop at their own catalog/schema.
 variables:
@@ -12,10 +12,16 @@ variables:
     default: main
   schema:
     description: UC schema created by the bundle to hold workshop assets.
-    default: ml_workshop
+    default: workshop
 
 include:
   - resources/*.yml
+
+# Tag every taggable resource in the bundle so workshop assets are easy to find
+# (and easy to clean up) alongside real workloads in the same workspace.
+presets:
+  tags:
+    workshop: databricks-ml-intro
 
 targets:
   # `dev` is the default target: assets are prefixed with your username and

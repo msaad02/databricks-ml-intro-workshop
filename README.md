@@ -38,6 +38,21 @@ databricks bundle deploy -t dev -p <your-profile> --var="warehouse_id=<id>"
 
 `databricks bundle validate -t dev` checks everything before you deploy.
 
+## What gets created
+
+Every resource is tagged `workshop=databricks-ml-intro`, so you can find and clean up
+workshop assets in a shared workspace. In the `dev` target, names are also prefixed
+with your username (e.g. `[dev jane_doe] batch-inference`).
+
+| Asset | Name |
+|---|---|
+| Bundle | `ml-workshop` |
+| Schema | `<catalog>.workshop` |
+| Job | `batch-inference` |
+| App | `fare-app` |
+| Registered model | `<catalog>.workshop.fare_model` |
+| Output table | `<catalog>.workshop.predictions` |
+
 ## Out of scope (talk about, don't build)
 
 Model Serving, Feature Store, in-depth governance, advanced ETL, LDP.

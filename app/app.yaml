@@ -4,7 +4,7 @@ env:
   - name: CATALOG
     value: main
   - name: SCHEMA
-    value: ml_workshop
+    value: workshop
   # The warehouse HTTP path is supplied by the app resource defined in the bundle.
   - name: DATABRICKS_WAREHOUSE_HTTP_PATH
     valueFrom: sql_warehouse

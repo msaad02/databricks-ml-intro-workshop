@@ -9,7 +9,7 @@ variables:
 resources:
   apps:
     fare_app:
-      name: ml-workshop-fare-app
+      name: fare-app
       source_code_path: ../app
       resources:
         - name: sql_warehouse

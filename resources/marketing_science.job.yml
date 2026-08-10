@@ -1,0 +1,63 @@
+# Optional advanced path. The four modeling questions run after one shared
+# PySpark preparation task; propensity adds a Feature Engineering dependency.
+resources:
+  jobs:
+    marketing_science_labs:
+      name: marketing-science-labs
+      tasks:
+        - task_key: prepare_data
+          environment_key: ml
+          notebook_task:
+            notebook_path: ../notebooks/10_prepare_marketing_data.py
+            base_parameters: &parameters
+              catalog: ${var.catalog}
+              schema: ${resources.schemas.workshop_schema.name}
+
+        - task_key: create_feature_table
+          depends_on: [{task_key: prepare_data}]
+          environment_key: ml
+          notebook_task:
+            notebook_path: ../notebooks/11_create_feature_table.py
+            base_parameters: *parameters
+
+        - task_key: propensity
+          depends_on: [{task_key: create_feature_table}]
+          environment_key: ml
+          notebook_task:
+            notebook_path: ../notebooks/12_propensity_models.py
+            base_parameters: *parameters
+
+        - task_key: forecasting
+          depends_on: [{task_key: prepare_data}]
+          environment_key: ml
+          notebook_task:
+            notebook_path: ../notebooks/13_forecasting_models.py
+            base_parameters: *parameters
+
+        - task_key: marketing_mix
+          depends_on: [{task_key: prepare_data}]
+          environment_key: ml
+          notebook_task:
+            notebook_path: ../notebooks/14_mmm_models.py
+            base_parameters: *parameters
+
+        - task_key: incrementality
+          depends_on: [{task_key: prepare_data}]
+          environment_key: ml
+          notebook_task:
+            notebook_path: ../notebooks/15_incrementality_models.py
+            base_parameters: *parameters
+
+        - task_key: batch_score_propensity
+          depends_on: [{task_key: propensity}]
+          environment_key: ml
+          notebook_task:
+            notebook_path: ../notebooks/16_batch_score_propensity.py
+            base_parameters: *parameters
+
+      environments:
+        - environment_key: ml
+          spec:
+            environment_version: "5"
+            dependencies:
+              - "databricks-feature-engineering"

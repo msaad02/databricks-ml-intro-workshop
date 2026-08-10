@@ -1,16 +1,24 @@
 # Step 6: deploy the Streamlit app as a Databricks App via the bundle.
-# The app needs a SQL warehouse to query the predictions table; attendees set
-# the warehouse id with:  -t dev --var="warehouse_id=<id>"
 variables:
   warehouse_id:
-    description: SQL warehouse the app queries. Find it in SQL Warehouses > Connection details.
-    default: "e76e7f550503364a" # Serverless Starter Warehouse in this workspace
+    description: SQL warehouse the app queries. Override this lookup when needed.
+    lookup:
+      warehouse: Serverless Starter Warehouse
 
 resources:
   apps:
     fare_app:
       name: fare-app
       source_code_path: ../app
+      config:
+        command: ["streamlit", "run", "app.py"]
+        env:
+          - name: CATALOG
+            value: ${var.catalog}
+          - name: SCHEMA
+            value: ${resources.schemas.workshop_schema.name}
+          - name: DATABRICKS_WAREHOUSE_ID
+            value_from: sql_warehouse
       resources:
         - name: sql_warehouse
           sql_warehouse:

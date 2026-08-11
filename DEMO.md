@@ -89,6 +89,11 @@ The workshop demonstrates lineage at two complementary levels:
 - Demonstrate a lifecycle concept once rather than repeating registry and deployment ceremony in every notebook.
 - Treat the Bayesian-ridge MMM as a conceptual bridge to full probabilistic MMM frameworks such as PyMC-Marketing, not as a claim that the example is production MMM.
 
+## Job design
+
+- `batch-inference` stays small so it can teach schedules, task dependencies, and repeatable batch prediction.
+- `all-workshop-examples` runs every notebook sequentially and serves as the one-click workshop runner.
+
 ## Out of scope
 
 - Production causal validation or media-budget optimization

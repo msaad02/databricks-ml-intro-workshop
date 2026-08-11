@@ -1,11 +1,12 @@
 # Databricks notebook source
-# ruff: noqa: F821  # Databricks injects spark, dbutils, and display.
 # MAGIC %md
 # MAGIC # 14. Marketing mix modeling: interpretable aggregate regression
 # MAGIC
 # MAGIC MMM rows represent weeks, not customers. The upstream PySpark notebook already applied simple adstock and saturation transforms. Here we compare a regularized regression with a lightweight Bayesian regression.
 
 # COMMAND ----------
+
+# ruff: noqa: F821  # Databricks injects spark, dbutils, and display.
 
 dbutils.widgets.text("catalog", "main")
 dbutils.widgets.text("schema", "workshop")

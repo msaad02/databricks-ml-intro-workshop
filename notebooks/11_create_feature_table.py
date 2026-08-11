@@ -1,5 +1,4 @@
 # Databricks notebook source
-# ruff: noqa: F821  # Databricks injects spark, dbutils, and display.
 # MAGIC %md
 # MAGIC # 11. Create a Unity Catalog Feature Engineering table
 # MAGIC
@@ -8,6 +7,8 @@
 # MAGIC **Concepts:** Feature Engineering in Unity Catalog, primary keys, PySpark, pandas API on Spark, offline training lineage.
 
 # COMMAND ----------
+
+# ruff: noqa: F821  # Databricks injects spark, dbutils, and display.
 
 dbutils.widgets.text("catalog", "main")
 dbutils.widgets.text("schema", "workshop")
@@ -72,4 +73,4 @@ display(bounded_pdf.head())
 # MAGIC 1. Catalog Explorer shows `samples.tpch` → `customer_feature_source` → `customer_features` table lineage.
 # MAGIC 2. The propensity notebook creates a training set with `FeatureLookup`.
 # MAGIC 3. `fe.log_model(..., training_set=training_set)` records the lookup specification with the MLflow model.
-# MAGIC 4. Registering that model in Unity Catalog exposes the upstream feature-table relationship and allows `score_batch` to retrieve the same features by key.
+# MAGIC 4. Registering that model in Unity Catalog exposes the upstream feature-table relationship so scoring can reuse the same governed features.

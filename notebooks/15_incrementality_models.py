@@ -1,11 +1,12 @@
 # Databricks notebook source
-# ruff: noqa: F821  # Databricks injects spark, dbutils, and display.
 # MAGIC %md
 # MAGIC # 15. Incrementality: population lift and customer-level uplift
 # MAGIC
 # MAGIC A propensity model predicts who converts. Incrementality asks what happened **because of treatment**. This experiment contains one statistical estimate and one T-learner uplift model.
 
 # COMMAND ----------
+
+# ruff: noqa: F821  # Databricks injects spark, dbutils, and display.
 
 dbutils.widgets.text("catalog", "main")
 dbutils.widgets.text("schema", "workshop")

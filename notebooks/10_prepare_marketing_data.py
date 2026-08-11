@@ -1,5 +1,4 @@
 # Databricks notebook source
-# ruff: noqa: F821  # Databricks injects spark, dbutils, and display.
 # MAGIC %md
 # MAGIC # 10. Prepare the marketing-science tables
 # MAGIC
@@ -8,6 +7,8 @@
 # MAGIC TPC-H has no campaign spend or treatment assignment, so the MMM and incrementality fields are clearly labeled simulations. They make the modeling patterns observable without pretending to be customer data.
 
 # COMMAND ----------
+
+# ruff: noqa: F821  # Databricks injects spark, dbutils, and display.
 
 dbutils.widgets.text("catalog", "main")
 dbutils.widgets.text("schema", "workshop")

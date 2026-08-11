@@ -1,20 +1,45 @@
-# Optional advanced path. The four modeling questions run after one shared
-# PySpark preparation task; propensity adds a Feature Engineering dependency.
+# Run every workshop notebook from top to bottom with one click.
 resources:
   jobs:
-    marketing_science_labs:
-      name: marketing-science-labs
+    all_examples:
+      name: all-workshop-examples
       tasks:
-        - task_key: prepare_data
+        - task_key: explore_catalog
           environment_key: ml
           notebook_task:
-            notebook_path: ../notebooks/10_prepare_marketing_data.py
+            notebook_path: ../notebooks/01_explore_catalog.ipynb
+
+        - task_key: exploratory_analysis
+          depends_on: [{task_key: explore_catalog}]
+          environment_key: ml
+          notebook_task:
+            notebook_path: ../notebooks/02_eda.ipynb
+
+        - task_key: train_core_model
+          depends_on: [{task_key: exploratory_analysis}]
+          environment_key: ml
+          notebook_task:
+            notebook_path: ../notebooks/03_train_register.ipynb
             base_parameters: &parameters
               catalog: ${var.catalog}
               schema: ${resources.schemas.workshop_schema.name}
 
+        - task_key: core_batch_prediction
+          depends_on: [{task_key: train_core_model}]
+          environment_key: ml
+          notebook_task:
+            notebook_path: ../notebooks/04_batch_predict.ipynb
+            base_parameters: *parameters
+
+        - task_key: prepare_marketing_data
+          depends_on: [{task_key: core_batch_prediction}]
+          environment_key: ml
+          notebook_task:
+            notebook_path: ../notebooks/10_prepare_marketing_data.py
+            base_parameters: *parameters
+
         - task_key: create_feature_table
-          depends_on: [{task_key: prepare_data}]
+          depends_on: [{task_key: prepare_marketing_data}]
           environment_key: ml
           notebook_task:
             notebook_path: ../notebooks/11_create_feature_table.py
@@ -28,28 +53,28 @@ resources:
             base_parameters: *parameters
 
         - task_key: forecasting
-          depends_on: [{task_key: prepare_data}]
+          depends_on: [{task_key: propensity}]
           environment_key: ml
           notebook_task:
             notebook_path: ../notebooks/13_forecasting_models.py
             base_parameters: *parameters
 
         - task_key: marketing_mix
-          depends_on: [{task_key: prepare_data}]
+          depends_on: [{task_key: forecasting}]
           environment_key: ml
           notebook_task:
             notebook_path: ../notebooks/14_mmm_models.py
             base_parameters: *parameters
 
         - task_key: incrementality
-          depends_on: [{task_key: prepare_data}]
+          depends_on: [{task_key: marketing_mix}]
           environment_key: ml
           notebook_task:
             notebook_path: ../notebooks/15_incrementality_models.py
             base_parameters: *parameters
 
         - task_key: batch_score_propensity
-          depends_on: [{task_key: propensity}]
+          depends_on: [{task_key: incrementality}]
           environment_key: ml
           notebook_task:
             notebook_path: ../notebooks/16_batch_score_propensity.py

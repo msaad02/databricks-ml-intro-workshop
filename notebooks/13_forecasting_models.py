@@ -1,11 +1,12 @@
 # Databricks notebook source
-# ruff: noqa: F821  # Databricks injects spark, dbutils, and display.
 # MAGIC %md
 # MAGIC # 13. Forecasting: compare models with a chronological holdout
 # MAGIC
 # MAGIC Forecasting gets its own experiment because its target and metrics are different from propensity. The last 20% of weeks form the test set; random splitting would leak the future.
 
 # COMMAND ----------
+
+# ruff: noqa: F821  # Databricks injects spark, dbutils, and display.
 
 dbutils.widgets.text("catalog", "main")
 dbutils.widgets.text("schema", "workshop")

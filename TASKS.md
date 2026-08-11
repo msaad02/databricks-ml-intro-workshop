@@ -15,6 +15,7 @@
 - [x] Add marketing-mix candidate models and channel-contribution artifacts.
 - [x] Add randomized incrementality and uplift-model examples.
 - [x] Add scheduled batch scoring through the registered propensity champion.
+- [x] Add a one-click job that runs every workshop notebook in order.
 - [x] Update bundle resources, dependencies, and workshop documentation.
 
 ## Validation
@@ -22,4 +23,5 @@
 - [x] Parse every notebook and compile Python cells where applicable.
 - [x] Validate YAML and parse the Databricks Asset Bundle locally.
 - [x] Run pure-Python model checks locally with `uv`.
-- [x] Deploy the bundle, execute the core job, and verify the app in a workspace.
+- [x] Deploy the two workshop jobs and verify the app is active in a workspace.
+- [x] Run all eleven notebook tasks successfully through `all-workshop-examples`.

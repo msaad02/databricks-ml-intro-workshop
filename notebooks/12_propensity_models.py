@@ -1,11 +1,12 @@
 # Databricks notebook source
-# ruff: noqa: F821  # Databricks injects spark, dbutils, and display.
 # MAGIC %md
 # MAGIC # 12. Propensity: compare two models in one MLflow experiment
 # MAGIC
 # MAGIC Both runs answer the same question—who will convert?—using the same label and metrics. That is why logistic regression and random forest belong in one experiment.
 
 # COMMAND ----------
+
+# ruff: noqa: F821  # Databricks injects spark, dbutils, and display.
 
 dbutils.widgets.text("catalog", "main")
 dbutils.widgets.text("schema", "workshop")
@@ -121,7 +122,7 @@ display(results)
 # MAGIC %md
 # MAGIC ## Register the champion with its feature lookups
 # MAGIC
-# MAGIC The small wrapper makes `predict()` return a probability. `fe.log_model` records the training-set lookup so batch scoring can later supply only customer keys.
+# MAGIC The small wrapper makes `predict()` return a probability. `fe.log_model` records the training-set lookup and upstream feature lineage with the registered model.
 
 # COMMAND ----------
 
